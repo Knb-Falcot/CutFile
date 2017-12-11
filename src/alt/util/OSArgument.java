@@ -26,9 +26,9 @@ import java.util.Hashtable;
 import java.util.StringTokenizer;
 
 public class OSArgument {
-	public Hashtable table;
+	public Hashtable<String, String> table;
 	public OSArgument(String args[]) {
-		table = new Hashtable();
+		table = new Hashtable<String, String>();
 		try {
 			for (int c=0; args[c] != null; c++) {
 				StringTokenizer param = new StringTokenizer(args[c], ":");

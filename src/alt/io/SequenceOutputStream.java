@@ -5,27 +5,27 @@
  *
  * Aquesta classe anomenada SequenceOutputStream (fluxe de sortida sequencial)
  * permet que  a  partir  d'un  origen de dades  s'en  realitzin  diferents de
- * sortida. Al constructor nomÇs li cal, una  "Enumeration"  que contingui els
- * noms  dels  "OutputStreams"  que  s'anirÖn  enllaáant  a  mida que els vagi
- * necessitant, i el tamany que assolirÖ cadascun d'ells.
+ * sortida. Al constructor nom√©s li cal, una  "Enumeration"  que contingui els
+ * noms  dels  "OutputStreams"  que  s'anir√†n  enlla√ßant  a  mida que els vagi
+ * necessitant, i el tamany que assolir√† cadascun d'ells.
  *
- * mätodes:
- * void write(byte buf[]);				Escriu una matriu de bytes en  el fluxe de
+ * m√®todes:
+ * void write(byte buf[]);			Escriu una matriu de bytes en  el fluxe de
  *                                  de sortida.
  * void write(int b);               Escriu un unic byte el el fluxe de sortida
- *                                  i com el parametre Çs  un "int" permet que
- *                                  es cridi  al  mätode amb expressions sense
- *                                  tindre que realitzar conversi¢ns a byte.
+ *                                  i com el parametre √©s  un "int" permet que
+ *                                  es cridi  al  m√©tode amb expressions sense
+ *                                  tindre que realitzar conversions a byte.
  * void write(byte buf[], int off, int len);   Escriu "len" bytes en la matriu
- *                                  "buf[]" comenáant a partir de "buf[off]".
+ *                                  "buf[]" comen√ßant a partir de "buf[off]".
  * void flush();                    Inicialitza  l'estat  de   la  sortida  de
  *                                  manera que es netejen tots els buffers.
  * void close();                    Tanca  el  fluxe  de  sortida. Els intents
- *                                  d' escritura   posteriors  g enerarÖn  una
- * 										   IOException.
+ *                                  d' escritura   posteriors  g enerar√†n  una
+ * 									IOException.
  *
  * Primera revisio: 19 Nov 1998
- *						  La classe no llenáa cap "IOExcepcion" (excepci¢ de E/S).
+ *						  La classe no llen√ßa cap "IOExcepcion" (excepci√≥ de E/S).
  ****************************************************************************/
 
 package alt.io;
@@ -34,17 +34,18 @@ import java.io.*;
 
 public class SequenceOutputStream extends OutputStream {
 	OutputStream f;
-	private Enumeration file;
+	private Enumeration<OutputStream> file;
 	long size;
 	int count;
-	public SequenceOutputStream(Enumeration file, long size) throws Exception {
+	@SuppressWarnings("unchecked")
+	public SequenceOutputStream(Enumeration<? extends OutputStream> enu, long size) throws Exception {
 		try {
 			count = 0;
-			this.file = file;
+			this.file = (Enumeration<OutputStream>) enu;
 			this.size = size;
-			if (file.hasMoreElements()) f = (OutputStream) this.file.nextElement();
+			if (enu.hasMoreElements()) f = this.file.nextElement();
 		} catch (Exception e) {
-			System.out.println("Error de construcci¢[10]: Mïdul SequenceOutputStream.");
+			System.out.println("Error de construcci√≥[10]: M√≤dul SequenceOutputStream.");
 			throw e;
 		}
 	}
@@ -54,11 +55,11 @@ public class SequenceOutputStream extends OutputStream {
 			count+= buf.length;
 			if (count >= size) {
 				f.close();
-				if (file.hasMoreElements()) f = (OutputStream) file.nextElement();
+				if (file.hasMoreElements()) f = file.nextElement();
 				count = 0;
 			}
 		} catch (IOException e) {
-			System.out.println("Error d'escritura[20]: Mïdul SequenceOutputStream.");
+			System.out.println("Error d'escritura[20]: M√≤dul SequenceOutputStream.");
 			throw e;
 		}
    }                                                                       //
@@ -68,11 +69,11 @@ public class SequenceOutputStream extends OutputStream {
 				count++;
 				if (count >= size) {
 					f.close();
-					if (file.hasMoreElements()) f = (OutputStream) file.nextElement();
+					if (file.hasMoreElements()) f = file.nextElement();
 					count = 0;
 				}
 		} catch (IOException e) {
-			System.out.println("Error d'escritura[21]: Mïdul SequenceOutputStream.");
+			System.out.println("Error d'escritura[21]: M√≤dul SequenceOutputStream.");
 			throw e;
 		}
 	}
@@ -82,11 +83,11 @@ public class SequenceOutputStream extends OutputStream {
 			count+= len;
 			if (count >= size) {
 				f.close();
-				if (file.hasMoreElements()) f = (OutputStream) file.nextElement();
+				if (file.hasMoreElements()) f = file.nextElement();
 				count = 0;
 			}
 		} catch (IOException e) {
-			System.out.println("Error d'escritura[22]: Mïdul SequenceOutputStream.");
+			System.out.println("Error d'escritura[22]: M√≤dul SequenceOutputStream.");
 			throw e;
 		}
 	}
@@ -94,7 +95,7 @@ public class SequenceOutputStream extends OutputStream {
 		try {
 			f.flush();
 		} catch (IOException e) {
-			System.out.println("Error al refrescar fitxer[30]: Mïdul SequenceOutputStream.");
+			System.out.println("Error al refrescar fitxer[30]: M√≤dul SequenceOutputStream.");
 			throw e;
 		}
 	}
@@ -102,7 +103,7 @@ public class SequenceOutputStream extends OutputStream {
 		try {
 			f.close();
 		} catch (IOException e) {
-			System.out.println("Error al tancar fitxer[40]: Mïdul SequenceOutputStream.");
+			System.out.println("Error al tancar fitxer[40]: M√≤dul SequenceOutputStream.");
 			throw e;
 		}
 	}

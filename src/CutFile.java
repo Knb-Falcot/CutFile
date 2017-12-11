@@ -13,8 +13,8 @@ class CutFile {
 	private static long ARCH_SIZE = 2048 * 1024; // 2 MB
 	public static void main(String args[]) {
 		OSArgument argument = new OSArgument(args);
-		long f_size; 					// Cont� el tamany maxim de partici� d'arxiu.
-		long size;						// Cont� el tamany del arxiu / BUFFER especificat.
+		long f_size; 					// Conté el tamany maxim de partició d'arxiu.
+		long size;						// Conté el tamany del arxiu / BUFFER especificat.
 		if (args.length > 0) {
 			try {
 				if (argument.exist("/v")) {
@@ -30,8 +30,8 @@ class CutFile {
 					long numFiles = f.length() / f_size;        // Calcula nº de fitxers.
 					System.out.println("Es crearan " + numFiles + " arxius.");
 					if (f.length() % f_size > 0) numFiles++;
-					Enumeration files = new MultiFile(f.getPath(), numFiles);
-					Enumeration enu = new FileOutputStreamEnumeration(files);
+					Enumeration<String> files = new MultiFile(f.getPath(), numFiles);
+					Enumeration<? extends OutputStream> enu = new FileOutputStreamEnumeration(files);
 					InputStream  fin  = new FileInputStream(f);
 					OutputStream fout = new SequenceOutputStream(enu, f_size);
 					InputStream finb = new BufferedInputStream(fin, BUFFER);
@@ -63,7 +63,7 @@ class CutFile {
 				System.out.println(e);
 			}
 		} else
-			System.out.println("Utilitzi:  CutFile <arxiu> [/v:<tamany_KB>]");
-			System.out.println("rev: 01");
+			System.out.println("Utilitzi:  CutFile <arxiu> [/v:<mida_KB>]");
+			System.out.println("rev: 02");
 	}
 }                                                                         //

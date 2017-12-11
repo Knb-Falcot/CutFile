@@ -11,12 +11,12 @@ class BarProcess {
 	}
 	synchronized public void init() {
 		System.out.print(" [........................................]\r");
-		System.out.print(" [Ü");
+		System.out.print(" [*");
 	}
 	synchronized public void next() {
 		current ++;
 		if ( current > proxim && proxim < total) {
-			System.out.print("Ü");
+			System.out.print("*");
 			proxim += part;
 		}
 	}

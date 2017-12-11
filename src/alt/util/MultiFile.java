@@ -31,14 +31,14 @@ import java.util.Vector;
 import alt.util.PathDivide;
 import java.util.Enumeration;
 
-public class MultiFile implements Enumeration {
+public class MultiFile implements Enumeration<String> {
 	long numFiles;				// Només n'és long per compatibilitat.
 	int  count;
 	int  totalElements;
-	private Vector files;
+	private Vector<String> files;
 	public MultiFile(String name, long numFiles) {
 		try {
-			files = new Vector();
+			files = new Vector<String>();
 			count = 0;
 			totalElements = 0;
 			this.numFiles = numFiles;
@@ -84,7 +84,7 @@ public class MultiFile implements Enumeration {
 			}
 		}
 	}
-	public Object nextElement() {
+	public String nextElement() {
 		try {
 			return files.elementAt(count++);
 		} catch (Exception e) {
